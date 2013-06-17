@@ -1,0 +1,179 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>joel</groupId>
+  <artifactId>SentimentWordCounter</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>SentimentWordCounter</name>
+  <url>http://maven.apache.org</url>
+  
+
+  <properties>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongo-java-driver</artifactId>
+        <version>2.10.1</version>
+    </dependency>
+	<dependency>
+		<groupId>org.apache.hadoop</groupId>
+		<artifactId>hadoop-core</artifactId>
+		<version>1.0.4</version>
+	</dependency>
+    <dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+	  	<artifactId>json-simple</artifactId>
+	  	<version>1.1.1</version>
+    </dependency>
+    <dependency>
+       <groupId>org.apache.lucene</groupId>
+       <artifactId>lucene-snowball</artifactId>
+       <version>3.0.3</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+     <plugins>
+         <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-compiler-plugin</artifactId>
+        	<version>3.0</version>
+        	<configuration>
+          		<source>1.6</source>
+          		<target>1.6</target>
+        	</configuration>
+      	 </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>unpack-dependencies</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                      <goal>unpack-dependencies</goal>
+                  </goals>
+                  <configuration>
+                      <outputDirectory>./target/classes</outputDirectory>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+		    <artifactId>maven-assembly-plugin</artifactId>
+		    <version>2.4</version>
+		    <configuration>
+
+			<archive>
+			  <manifest>
+				<addClasspath>true</addClasspath>
+				<mainClass>com.mongodb.hadoop.examples.treasury.TreasuryYieldXMLConfig</mainClass>
+				<classpathPrefix>dependency-jars/</classpathPrefix>
+			  </manifest>
+			</archive>
+
+
+		        <descriptorRefs>
+		            <descriptorRef>jar-with-dependencies</descriptorRef>
+		        </descriptorRefs>
+		    </configuration>
+		    <executions>
+		        <execution>
+		            <id>make-assembly</id>
+		            <phase>package</phase>
+		            <goals>
+		                <goal>single</goal>
+		            </goals>
+		        </execution>
+		    </executions>
+		</plugin>
+     </plugins>
+  </build>
+  
+  <repositories>
+	<repository>
+		<id>Maven Repository</id>
+		<url>http://mvnrepository.com/artifact/</url>
+	</repository>
+  </repositories>
+  
+  
+</project>
+  
+  
+  
+  <dependencies> 
+    <dependency>
+		<groupId>org.apache.hadoop</groupId>
+		<artifactId>hadoop-core</artifactId>
+		<version>1.0.4</version>
+	</dependency>
+	
+    <dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+	  	<artifactId>json-simple</artifactId>
+	  	<version>1.1.1</version>
+    </dependency>
+    
+    <dependency>
+       <groupId>org.apache.lucene</groupId>
+       <artifactId>lucene-snowball</artifactId>
+       <version>3.0.3</version>
+    </dependency>
+    
+  </dependencies>
+
+<build>
+	<plugins>
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>2.3.2</version>
+		<configuration>
+			<source>${jdk.version}</source>
+			<target>${jdk.version}</target>
+		</configuration>
+	  </plugin>
+ 
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-jar-plugin</artifactId>
+		<version>2.4</version>
+		<configuration>
+			<archive>
+			  <manifest>
+				<addClasspath>true</addClasspath>
+				<mainClass>com.mobjoy.gameverse.NeighborsFinder</mainClass>
+				<classpathPrefix>dependency-jars/</classpathPrefix>
+			  </manifest>
+			</archive>
+		</configuration>
+	  </plugin>
+ 
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-dependency-plugin</artifactId>
+		<version>2.5.1</version>
+		<executions>
+		  <execution>
+			<id>copy-dependencies</id>
+			<phase>package</phase>
+			<goals>
+				<goal>copy-dependencies</goal>
+			</goals>
+			<configuration>
+				<includeGroupIds>org.apache.hadoop</includeGroupIds>
+				<includeGroupIds>com.googlecode.json-simple</includeGroupIds>
+				<outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
+			</configuration>
+		  </execution>
+		 </executions>
+		</plugin>
+ 
+		</plugins>
+	</build>
+
+</project>

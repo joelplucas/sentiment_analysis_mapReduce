@@ -70,7 +70,7 @@
 			<archive>
 			  <manifest>
 				<addClasspath>true</addClasspath>
-				<mainClass>com.mongodb.hadoop.examples.treasury.TreasuryYieldXMLConfig</mainClass>
+				<mainClass>joel.sentiment.SentimentWordCounter</mainClass>
 				<classpathPrefix>dependency-jars/</classpathPrefix>
 			  </manifest>
 			</archive>

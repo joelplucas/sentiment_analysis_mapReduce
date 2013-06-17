@@ -18,22 +18,29 @@ import org.codehaus.jackson.JsonToken;
 public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {     
       
 	private Text word = new Text();
-	private Set<String> stopWords =  new StopWordsReader();
+	private static Set<String> stopWords =  new StopWordsReader();
 	
 	private Set<String> wordsFromReview = null;
 	private int numUsefulVotes = 0;
-
+	
     public void map(LongWritable key, Text value, 
     		 	OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 
     	JsonFactory jfactory = new JsonFactory();
     	JsonParser jParser = jfactory.createJsonParser(value.toString());
     	
-    	while (jParser.nextToken() != JsonToken.END_OBJECT) {
+    	boolean isFirstEndObj = false;
+    	while (jParser.nextToken() != JsonToken.END_OBJECT || !isFirstEndObj) {
     		if("text".equals(jParser.getCurrentName())) {
+    			jParser.nextToken();
     			wordsFromReview = getParsedWords(jParser.getText());
-    		} else if("votes".equals(jParser.getCurrentName())) {
+    		} else if("useful".equals(jParser.getCurrentName())) {
+    			jParser.nextToken();
     			numUsefulVotes = jParser.getIntValue();
+    		}
+    		
+    		if(JsonToken.END_OBJECT.equals(jParser.getCurrentToken())) {
+    			isFirstEndObj = true;
     		}
     	}
     	       
@@ -43,7 +50,7 @@ public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<
         }
     }
 
-    private Set<String> getParsedWords(String line) {
+    private static Set<String> getParsedWords(String line) {
     	Set<String> parsedWords = new TreeSet<String>();
     	
     	line = removeNonAlphanumericCharsFromLine(line);
@@ -67,19 +74,19 @@ public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<
     	return parsedWords;
     }    
     
-	private String removeExtraWhiteSpaceFromTerm(String textLine) {
+	private static String removeExtraWhiteSpaceFromTerm(String textLine) {
 		textLine = textLine.replaceAll("\\s{1,}", " ");
 		textLine = textLine.toLowerCase();
 		return textLine;
 	}
 	
-	private String removeNonAlphanumericCharsFromLine(String strLine) {
+	private static String removeNonAlphanumericCharsFromLine(String strLine) {
 		strLine = strLine.replaceAll("[^A-Za-z0-9]", " ").trim();
 		strLine = removeExtraWhiteSpaceFromTerm(strLine);
 		return strLine;
 	}
 	
-	private boolean isShortString(String word) {
+	private static boolean isShortString(String word) {
 		if (word.length() <= 2) {
 			return true;
 		} else {
@@ -87,7 +94,7 @@ public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<
 		}
 	}
 	
-	private boolean isNumeric(String wordText) {  
+	private static boolean isNumeric(String wordText) {  
 	   try  {  
 	      Integer.parseInt(wordText);  
 	      return true;  

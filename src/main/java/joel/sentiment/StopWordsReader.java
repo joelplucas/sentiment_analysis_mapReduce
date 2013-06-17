@@ -1,10 +1,6 @@
 package joel.sentiment;
 
-import java.io.File;
-import java.util.List;
 import java.util.TreeSet;
-
-import javax.xml.bind.JAXBContext;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.TermAttribute;
@@ -22,20 +18,8 @@ public class StopWordsReader extends TreeSet<String> {
 	}
 	
 	private void addEnglishGrammaWords() {		
-		this.addAll(readStopWordsFromFile("stopWords.xml"));
-	}
-	
-	private List<String> readStopWordsFromFile(String filePathName) {
-		//String filePathName = "target/classes/META-INF/stopWords/" + fileName;
-		StopWords stopWords = null;
-		try {
-		    JAXBContext context = JAXBContext.newInstance(StopWords.class);
-		    stopWords = (StopWords)context.createUnmarshaller().unmarshal(new File(filePathName));
-		} catch(Exception e) {
-		    e.printStackTrace();
-		    System.exit(0);
-		}
-		return stopWords.getStopWords();
+		StopWords stopWords = new StopWords();
+		this.addAll(stopWords);
 	}
 	
 	private void convertStopWordsToLucene() {

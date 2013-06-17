@@ -5,7 +5,6 @@ import java.util.TreeSet;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 
-import joel.sentiment.model.StopWords;
 
 
 @SuppressWarnings("serial")

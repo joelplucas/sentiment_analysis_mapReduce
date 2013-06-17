@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 
-import joel.sentiment.LuceneEnglishAnalyzer;
-import joel.sentiment.StopWordsReader;
+import joel.sentiment.lexicalParser.LuceneEnglishAnalyzer;
+import joel.sentiment.lexicalParser.StopWordsReader;
 
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;

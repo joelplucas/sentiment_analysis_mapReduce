@@ -50,7 +50,7 @@ public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<
         }
     }
 
-    private static Set<String> getParsedWords(String line) {
+    private Set<String> getParsedWords(String line) {
     	Set<String> parsedWords = new TreeSet<String>();
     	
     	line = removeNonAlphanumericCharsFromLine(line);
@@ -74,19 +74,19 @@ public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<
     	return parsedWords;
     }    
     
-	private static String removeExtraWhiteSpaceFromTerm(String textLine) {
+	private String removeExtraWhiteSpaceFromTerm(String textLine) {
 		textLine = textLine.replaceAll("\\s{1,}", " ");
 		textLine = textLine.toLowerCase();
 		return textLine;
 	}
 	
-	private static String removeNonAlphanumericCharsFromLine(String strLine) {
+	private String removeNonAlphanumericCharsFromLine(String strLine) {
 		strLine = strLine.replaceAll("[^A-Za-z0-9]", " ").trim();
 		strLine = removeExtraWhiteSpaceFromTerm(strLine);
 		return strLine;
 	}
 	
-	private static boolean isShortString(String word) {
+	private boolean isShortString(String word) {
 		if (word.length() <= 2) {
 			return true;
 		} else {
@@ -94,7 +94,7 @@ public class SentimentWordCounterMapper extends MapReduceBase implements Mapper<
 		}
 	}
 	
-	private static boolean isNumeric(String wordText) {  
+	private boolean isNumeric(String wordText) {  
 	   try  {  
 	      Integer.parseInt(wordText);  
 	      return true;  
